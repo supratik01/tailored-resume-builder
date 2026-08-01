@@ -1,0 +1,27 @@
+# Env
+.env
+.env.local
+
+# Node
+node_modules/
+dist/
+.vite/
+*.log
+
+# Java
+target/
+*.class
+.mvn/wrapper/maven-wrapper.jar
+*.iml
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+*.jar
+*.war
+*.pyc
+__pycache__/

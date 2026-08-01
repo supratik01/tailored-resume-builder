@@ -1,0 +1,160 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ── Tailr tokens ──────────────────────────────────────── */
+    /* Cool neutrals tinted toward the brand hue (262, indigo). */
+    --canvas:        oklch(0.955 0.008 260);   /* backdrop behind panels, carries the grid */
+    --grid:          oklch(0.9 0.012 262 / 0.55);
+    --surface:       oklch(0.995 0.002 260);   /* panel / screen background */
+    --surface-sunk:  oklch(0.975 0.006 260);   /* preview cards, telemetry columns */
+
+    --ink:           oklch(0.26 0.02 262);     /* primary text */
+    --ink-soft:      oklch(0.45 0.02 262);     /* body, secondary */
+    --ink-faint:     oklch(0.56 0.02 262);     /* mono captions, // comments */
+    --ink-inverse:   oklch(0.97 0.004 260);    /* text on dark panels */
+
+    --hairline:      oklch(0.91 0.01 262);
+    --hairline-strong: oklch(0.85 0.014 262);
+
+    --accent:        oklch(0.54 0.16 262);
+    --accent-hover:  oklch(0.47 0.16 262);
+    --accent-wash:   oklch(0.96 0.03 262);
+    --accent-on-dark: oklch(0.72 0.13 262);
+
+    --dark-panel:    oklch(0.16 0.02 262);
+    --dark-panel-2:  oklch(0.21 0.022 262);
+
+    /* Signal colors — meaning only, never decoration */
+    --good:          oklch(0.62 0.13 155);
+    --good-wash:     oklch(0.95 0.05 155);
+    --gap:           oklch(0.72 0.13 70);
+    --gap-wash:      oklch(0.95 0.06 78);
+    --remove:        oklch(0.6 0.15 25);
+    --remove-wash:   oklch(0.95 0.04 25);
+
+    --shadow-sm:  0 1px 2px oklch(0.26 0.02 262 / 0.06);
+    --shadow-md:  0 8px 24px -12px oklch(0.26 0.02 262 / 0.18);
+    --shadow-lg:  0 30px 70px -34px oklch(0.26 0.02 262 / 0.35);
+
+    /* ── Tailwind/shadcn compat (HSL approximations of the above) ── */
+    --background: 260 20% 99%;
+    --foreground: 262 12% 22%;
+    --card: 260 20% 99%;
+    --card-foreground: 262 12% 22%;
+    --primary: 262 55% 48%;
+    --primary-foreground: 260 20% 99%;
+    --secondary: 260 14% 96%;
+    --secondary-foreground: 262 12% 22%;
+    --muted: 260 14% 96%;
+    --muted-foreground: 262 8% 46%;
+    --accent-hsl: 262 55% 48%;
+    --accent-foreground: 260 20% 99%;
+    --destructive: 25 70% 50%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 262 12% 90%;
+    --input: 262 12% 90%;
+    --ring: 262 55% 48%;
+    --radius: 0.5rem;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    border-color: hsl(var(--border));
+  }
+
+  html {
+    scroll-behavior: smooth;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--surface);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  .font-mono-plex {
+    font-family: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  }
+  .text-balance { text-wrap: balance; }
+  .text-pretty  { text-wrap: pretty; }
+
+  /* Blueprint grid — signals something engineered. 34px pitch. */
+  .blueprint {
+    background-color: var(--canvas);
+    background-image:
+      linear-gradient(to right, var(--grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+    background-size: 34px 34px;
+  }
+  .blueprint-dark {
+    background-color: var(--dark-panel);
+    background-image:
+      linear-gradient(to right, oklch(1 0 0 / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(1 0 0 / 0.045) 1px, transparent 1px);
+    background-size: 34px 34px;
+  }
+
+  .focus-ring:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+}
+
+/* Form controls — one vocabulary across the app */
+.field {
+  display: block;
+  width: 100%;
+  height: 2.5rem;
+  padding: 0 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 0.9375rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.field::placeholder { color: var(--ink-faint); }
+.field:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px oklch(0.54 0.16 262 / 0.14);
+}
+
+/* Legacy alias — auth pages still reference this class */
+.auth-input { composes: field; }
+.auth-input {
+  display: block;
+  width: 100%;
+  height: 2.5rem;
+  padding: 0 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 0.9375rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.auth-input::placeholder { color: var(--ink-faint); }
+.auth-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px oklch(0.54 0.16 262 / 0.14);
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--hairline-strong); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--ink-faint); }

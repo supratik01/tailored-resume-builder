@@ -1,0 +1,58 @@
+spring:
+  application:
+    name: resume-builder
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/resume_builder}
+    username: ${SPRING_DATASOURCE_USERNAME:resume}
+    password: ${SPRING_DATASOURCE_PASSWORD:resume-dev-pass}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: false
+    open-in-view: false
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 12MB
+
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:dev-only-secret-please-change-in-production-this-is-not-secure}
+    access-ttl-minutes: ${JWT_ACCESS_TTL_MINUTES:15}
+    refresh-ttl-days: ${JWT_REFRESH_TTL_DAYS:14}
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5186}
+  quota:
+    free-runs-per-month: ${FREE_RUNS_PER_MONTH:3}
+    zone: ${QUOTA_ZONE:Asia/Kolkata}
+  razorpay:
+    key-id: ${RAZORPAY_KEY_ID:}
+    key-secret: ${RAZORPAY_KEY_SECRET:}
+    webhook-secret: ${RAZORPAY_WEBHOOK_SECRET:}
+    plan-id: ${RAZORPAY_PLAN_ID:}
+    base-url: ${RAZORPAY_BASE_URL:https://api.razorpay.com/v1}
+  openai:
+    api-key: ${OPENAI_API_KEY:}
+    model: ${OPENAI_MODEL:gpt-4o-mini}
+    base-url: ${OPENAI_BASE_URL:https://api.openai.com/v1}
+    timeout-seconds: 60
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+logging:
+  level:
+    com.tailored.resume: INFO
+    org.springframework.security: WARN

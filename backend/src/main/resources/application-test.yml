@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+app:
+  jwt:
+    secret: test-secret-do-not-use-in-production-this-is-just-for-unit-tests-only-okay
+    access-ttl-minutes: 15
+    refresh-ttl-days: 14
+  cors:
+    allowed-origins: http://http://localhost:5186
+  openai:
+    api-key: test
+    model: gpt-4o-mini
+    base-url: http://localhost:9999
+    timeout-seconds: 5
